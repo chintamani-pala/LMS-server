@@ -15,12 +15,10 @@
   ],
   "env": {
     "NODE_ENV": "production"
-    // Add any other environment variables here
   },
   "build": {
     "env": {
       "NODE_ENV": "production"
-      // Add any other build-time environment variables here
     }
   }
 }
