@@ -50,6 +50,14 @@ app.get("/test", (req: Request, res: Response, next: NextFunction) => {
   });
 });
 
+//post request test
+app.post("/posttest", (req: Request, res: Response, next: NextFunction) => {
+  res.status(200).json({
+    success: true,
+    message: "Post API is working",
+  });
+});
+
 //unknown route
 app.all("/*", (req: Request, res: Response, next: NextFunction) => {
   const err = new Error(`Route ${req.originalUrl} not fount`) as any;
