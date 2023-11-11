@@ -8,10 +8,10 @@
     }
   ],
   "functions": {
-    "api/login": {
+    "api/*": {
       "runtime": "node@18",
       "memory": 512,
-      "maxDuration": 10
+      "maxDuration": 50
     }
   },
   "routes": [
