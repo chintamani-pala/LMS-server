@@ -1,5 +1,5 @@
 {
-  "builds": [{ "src": "./build/*", "use": "@vercel/node" }],
+  "builds": [{ "src": "./build/**", "use": "@vercel/node" }],
   "env": {
     "PORT": "8000",
     "ORIGIN": "http://localhost:3000",
