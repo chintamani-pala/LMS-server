@@ -7,13 +7,6 @@
       "use": "@vercel/node"
     }
   ],
-  "functions": {
-    "api/*": {
-      "runtime": "node@18",
-      "memory": 512,
-      "maxDuration": 50
-    }
-  },
   "routes": [
     {
       "src": "/(.*)",
