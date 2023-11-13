@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { CatchAsyncError } from "../middleware/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
 import LayoutModel from "../models/layout.model";
+import ejs from 'ejs';
 import cloudinary from "cloudinary";
 
 //create layout
