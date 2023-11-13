@@ -83,7 +83,8 @@
 
     /* Type Checking */
     "strict": true, 
-    "types": ["node", "express", "ejs"],                                     /* Enable all strict type-checking options. */
+    "types": ["node", "express", "ejs"],
+    "typeRoots": ["./node_modules/@types", "./types"],/* Enable all strict type-checking options. */
     // "noImplicitAny": true,                            /* Enable error reporting for expressions and declarations with an implied 'any' type. */
     // "strictNullChecks": true,                         /* When type checking, take into account 'null' and 'undefined'. */
     // "strictFunctionTypes": true,                      /* When assigning functions, check to ensure parameters and the return values are subtype-compatible. */
