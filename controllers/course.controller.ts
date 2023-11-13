@@ -11,8 +11,8 @@ import CourseModel from "../models/course.model";
 import { redis } from "../utils/redis";
 import mongoose from "mongoose";
 import path from "path";
-import ejs from "ejs";
-import sendMail from "../utils/sendMail";
+// import ejs from "ejs";
+// import sendMail from "../utils/sendMail";
 import NotificationModel from "../models/notificationModel";
 import { log } from "console";
 
@@ -256,20 +256,20 @@ export const addAnswer = CatchAsyncError(
           name: question.user.name,
           title: courseContent.title,
         };
-        const html = await ejs.renderFile(
-          path.join(__dirname, "../mails/question-reply.ejs"),
-          data
-        );
-        try {
-          await sendMail({
-            email: question.user.email,
-            subject: "Question Reply",
-            template: "question-reply.ejs",
-            data,
-          });
-        } catch (error: any) {
-          return next(new ErrorHandler(error.message, 500));
-        }
+        // const html = await ejs.renderFile(
+        //   path.join(__dirname, "../mails/question-reply.ejs"),
+        //   data
+        // );
+        // try {
+        //   await sendMail({
+        //     email: question.user.email,
+        //     subject: "Question Reply",
+        //     template: "question-reply.ejs",
+        //     data,
+        //   });
+        // } catch (error: any) {
+        //   return next(new ErrorHandler(error.message, 500));
+        // }
       }
       res.status(200).json({
         success: true,
