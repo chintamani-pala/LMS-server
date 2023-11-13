@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { CatchAsyncError } from "../middleware/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
 import cron from "node-cron";
+import ejs from 'ejs';
 import { log } from "console";
 
 //get all notificatios --only for admin
