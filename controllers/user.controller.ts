@@ -3,7 +3,6 @@ import userModel, { IUser } from "../models/user.model";
 import ErrorHandler from "../utils/ErrorHandler";
 import { CatchAsyncError } from "../middleware/catchAsyncErrors";
 import jwt, { JwtPayload, Secret } from "jsonwebtoken";
-import ejs from "ejs";
 import path from "path";
 import sendMail from "../utils/sendMail";
 import { accessTokenOption, refreshTokenOption, sendToken } from "../utils/jwt";
@@ -51,18 +50,18 @@ export const registerUser = CatchAsyncError(
         activationCode,
       };
       await redis.set(user.email, password, "EX", 5 * 60);
-      const html = await ejs.renderFile(
-        path.join(__dirname, "../mails/activation-mail.ejs"),
-        data
-      );
+      // const html = await ejs.renderFile(
+      //   path.join(__dirname, "../mails/activation-mail.ejs"),
+      //   data
+      // );
 
-      try {
-        await sendMail({
-          email: user.email,
-          subject: "Account activation",
-          template: "activation-mail.ejs",
-          data,
-        });
+      // try {
+      //   await sendMail({
+      //     email: user.email,
+      //     subject: "Account activation",
+      //     template: "activation-mail.ejs",
+      //     data,
+      //   });
         res.status(201).json({
           success: true,
           message: `Please check your email ${user.email} to activate your account`,
@@ -140,17 +139,17 @@ export const activateUser = CatchAsyncError(
         password: TempPassword,
         date: currentDate,
       };
-      const html = await ejs.renderFile(
-        path.join(__dirname, "../mails/user-registration-complete.ejs"),
-        userData
-      );
-      try {
-        await sendMail({
-          email: user.email,
-          subject: "Account Created SuccessFully",
-          template: "user-registration-complete.ejs",
-          data: userData,
-        });
+      // const html = await ejs.renderFile(
+      //   path.join(__dirname, "../mails/user-registration-complete.ejs"),
+      //   userData
+      // );
+      // try {
+      //   await sendMail({
+      //     email: user.email,
+      //     subject: "Account Created SuccessFully",
+      //     template: "user-registration-complete.ejs",
+      //     data: userData,
+      //   });
       } catch (error: any) {
         return next(new ErrorHandler(error.message, 400));
       }
