@@ -5,7 +5,7 @@ import CourseModel from "../models/course.model";
 import userModel from "../models/user.model";
 import orderModel,{IOrder} from "../models/orderModel";
 import path from "path";
-import ejs from "ejs";
+// import ejs from "ejs";
 import sendMail from "../utils/sendMail";
 import NotificationModel from "../models/notificationModel";
 import { getAllordersService, newOrder } from "../services/order.services";
@@ -43,20 +43,20 @@ export const createOrder = CatchAsyncError(
                 }
             }
 
-            const html = await ejs.renderFile(path.join(__dirname,'../mails/order-confirmation.ejs'),{order:mailData});
+            // const html = await ejs.renderFile(path.join(__dirname,'../mails/order-confirmation.ejs'),{order:mailData});
 
-            try{
-                if(user){
-                    await sendMail({
-                        email: user.email,
-                        subject: "Order Confirmation",
-                        template: "order-confirmation.ejs",
-                        data:mailData,
-                    });
-                }
-            }catch(error:any){
-                return next(new ErrorHandler(error.message,500));
-            }
+            // try{
+            //     if(user){
+            //         await sendMail({
+            //             email: user.email,
+            //             subject: "Order Confirmation",
+            //             template: "order-confirmation.ejs",
+            //             data:mailData,
+            //         });
+            //     }
+            // }catch(error:any){
+            //     return next(new ErrorHandler(error.message,500));
+            // }
 
             user?.courses.push(course?._id);
             await user?.save();
