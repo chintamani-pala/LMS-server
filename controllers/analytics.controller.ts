@@ -5,6 +5,7 @@ import { generateLast12MonthsData } from "../utils/analytics.generator";
 import userModel from "../models/user.model";
 import CourseModel from "../models/course.model";
 import orderModel from "../models/orderModel";
+import ejs from 'ejs';
 
 //get user analytics  --only for admin
 export const getUserAnalytics = CatchAsyncError(
