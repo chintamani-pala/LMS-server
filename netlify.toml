@@ -1,6 +1,7 @@
 [build]
   command = "npm run build"  # Adjust this based on your build script
   functions = "functions"
+  runtime = "nodejs18.x"  # Adjust the Node.js version as needed
 
 [[redirects]]
   from = "/(.*)"
