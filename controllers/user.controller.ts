@@ -150,12 +150,12 @@ export const activateUser = CatchAsyncError(
       //     template: "user-registration-complete.ejs",
       //     data: userData,
       //   });
-      } catch (error: any) {
-        return next(new ErrorHandler(error.message, 400));
-      }
-      res.status(200).json({
-        success: true,
-      });
+      // } catch (error: any) {
+      //   return next(new ErrorHandler(error.message, 400));
+      // }
+      // res.status(200).json({
+      //   success: true,
+      // });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
