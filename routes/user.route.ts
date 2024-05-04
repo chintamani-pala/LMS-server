@@ -15,4 +15,5 @@ userRouter.put("/update-user-avatar",isAutheticated,updateProfilePicture)
 userRouter.get("/get-users",isAutheticated,authorizeRoles("admin"),getAllUsers)
 userRouter.put("/update-user-role",isAutheticated,authorizeRoles("admin"),updateUserRole)
 userRouter.delete("/delete-user/:id",isAutheticated,authorizeRoles("admin"),deleteUser)
+//tested successfully
 export default userRouter;
