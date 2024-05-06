@@ -49,7 +49,6 @@ export const editCourse = CatchAsyncError(
       const courseId = req.params.id;
       if (thumbnail) {
         const course: any = await CourseModel.findById(courseId);
-        console.log(course);
         await cloudinary.v2.uploader.destroy(course?.thumbnail.public_id);
         const myCloud = await cloudinary.v2.uploader.upload(thumbnail, {
           folder: "courses",
@@ -83,7 +82,6 @@ export const getSingleCourse = CatchAsyncError(
     try {
       const courseId = req.params.id;
       const isCacheExist = await redis.get(courseId);
-      console.log(isCacheExist)
       if (isCacheExist) {
         const course = JSON.parse(isCacheExist);
         res.status(200).json({
@@ -111,6 +109,7 @@ export const getAllCourse = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const isCacheExist = await redis.get("allCourses");
+      console.log(isCacheExist)
       if (isCacheExist) {
         const course = JSON.parse(isCacheExist);
         res.status(200).json({
