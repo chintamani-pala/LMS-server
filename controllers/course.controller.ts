@@ -110,6 +110,7 @@ export const getAllCourse = CatchAsyncError(
     try {
       const isCacheExist = await redis.get("allCourses");
       console.log(isCacheExist)
+      console.log(typeof isCacheExist)
       if (isCacheExist) {
         const course = JSON.parse(isCacheExist);
         res.status(200).json({
