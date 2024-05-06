@@ -83,6 +83,7 @@ export const getSingleCourse = CatchAsyncError(
     try {
       const courseId = req.params.id;
       const isCacheExist = await redis.get(courseId);
+      console.log(isCacheExist)
       if (isCacheExist) {
         const course = JSON.parse(isCacheExist);
         res.status(200).json({
