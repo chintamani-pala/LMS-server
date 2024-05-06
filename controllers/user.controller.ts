@@ -460,9 +460,7 @@ export const registerUser = CatchAsyncError(
         email,
         password,
       };
-      console.log("before token")
       const activationToken = createActivationToken(user);
-      console.log("token created")
       const activationCode = activationToken.activationCode;
 
       const data = {
@@ -505,7 +503,6 @@ interface IActivationToken {
 
 export const createActivationToken = (user: any): IActivationToken => {
   const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
-  console.log("activation code created")
   const token = jwt.sign(
     {
       user,
@@ -516,7 +513,6 @@ export const createActivationToken = (user: any): IActivationToken => {
       expiresIn: "5m",
     }
   );
-  console.log("after jwt")
   return { token, activationCode };
 };
 
