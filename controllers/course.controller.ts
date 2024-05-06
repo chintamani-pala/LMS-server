@@ -120,7 +120,7 @@ export const getAllCourse = CatchAsyncError(
         const course = await CourseModel.find().select(
           "-courseData.videoUrl -courseData.suggesion -coursedata.questions -courseData.links"
         );
-        await redis.set("allCourses", JSON.stringify(course));
+        await redis.set("allCourses", JSON.stringify(course), "EX", 60*60);
         res.status(200).json({
           success: true,
           course,
