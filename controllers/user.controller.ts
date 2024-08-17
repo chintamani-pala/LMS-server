@@ -471,7 +471,8 @@ export const registerUser = CatchAsyncError(
       };
       await redis.set(user.email, password, "EX", 5 * 60);
       const html = await ejs.renderFile(
-        path.join(__dirname, "../mails/activation-mail.ejs"),
+        // path.join(__dirname, "../mails/activation-mail.ejs"),
+        path.resolve(__dirname, "../mails/activation-mail.ejs"),
         data
       );
 
