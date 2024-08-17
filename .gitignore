@@ -1,2 +1,5 @@
 # Generated commands for .gitignore
 node_modules
+.env
+p.json
+pl.json
