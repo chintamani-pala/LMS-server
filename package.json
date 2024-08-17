@@ -13,7 +13,7 @@
     "start": "node build/server.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false",
     "build": "tsc && npm run copy-mails",
-    "copy-mails": "copyfiles -u 1 \"src/mails/**/*\" build/"
+    "copy-mails": "copyfiles -u 1 \"mails/**/*\" build/mails/"
   },
   "author": "chintamani pala",
   "license": "ISC",
