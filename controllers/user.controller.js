@@ -628,7 +628,31 @@ exports.socialAuth = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, ne
         const { email, name, avatar } = req.body;
         const user = await user_model_1.default.findOne({ email });
         if (!user) {
+            const date = new Date();
+            const currentDate = date.toLocaleString("default", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+            });
             const newUser = await user_model_1.default.create({ email, name, avatar });
+            const userData = {
+                name: newUser.name,
+                email: undefined,
+                password: undefined,
+                date: currentDate,
+            };
+            const html = await ejs_1.default.renderFile(path_1.default.join(__dirname, "../mails/user-registration-complete.ejs"), userData);
+            try {
+                await (0, sendMail_1.default)({
+                    email: newUser.email,
+                    subject: "Account Created SuccessFully",
+                    template: "user-registration-complete.ejs",
+                    data: userData,
+                });
+            }
+            catch (error) {
+                return next(new ErrorHandler_1.default(error.message, 400));
+            }
             (0, jwt_1.sendToken)(newUser, 200, res);
         }
         else {
