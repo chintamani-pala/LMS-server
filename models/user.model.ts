@@ -16,8 +16,8 @@ export interface IUser extends Document {
   isVarified: boolean;
   courses: Array<{ courseId: string }>;
   comparePassword(password: string): Promise<boolean>;
-  SignAccessToken : ()=>string;
-  SignRefreshToken : ()=>string;
+  SignAccessToken: () => string;
+  SignRefreshToken: () => string;
 }
 const userSchema = new mongoose.Schema(
   {
@@ -71,20 +71,19 @@ userSchema.pre<IUser>("save", async function (next) {
   next();
 });
 
-
 //sign access token
 userSchema.methods.SignAccessToken = function () {
-  return jwt.sign({ id: this._id }, process.env.ACCESS_TOKEN || '',{
-    expiresIn:"5m"
+  return jwt.sign({ id: this._id }, process.env.ACCESS_TOKEN || "", {
+    expiresIn: "5m",
   });
-}
+};
 
 //sign refresh token
 userSchema.methods.SignRefreshToken = function () {
-  return jwt.sign({ id: this._id }, process.env.REFRESH_TOKEN || '',{
-    expiresIn:"3d"
+  return jwt.sign({ id: this._id }, process.env.REFRESH_TOKEN || "", {
+    expiresIn: "3d",
   });
-}
+};
 
 //compare password
 userSchema.methods.comparePassword = async function (

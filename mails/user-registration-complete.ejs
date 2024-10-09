@@ -12,6 +12,9 @@
       max-width: 600px;
       margin: 0 auto;
       padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
     h1 {
       font-size: 24px;
@@ -28,50 +31,26 @@
       padding: 10px 20px;
       border-radius: 4px;
     }
-    body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  margin: 0;
-  padding: 0;
-}
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-p {
-  margin-bottom: 10px;
-}
-.button {
-  display: inline-block;
-  background-color: #4CAF50;
-  color: #ffffff;
-  text-decoration: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-}
-
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Welcome to Learning Management System!</h1>
-    <p>Dear [<%= name %>],</p>
+    <p>Dear <%= name %>,</p>
     <p>Thank you for registering on Learning Management System! We're thrilled to have you as a new member of our community.</p>
-    <p>We want to make sure you have a seamless experience, so here are a few important details:</p>
+
+    <% if (email && password) { %>
+      <p>We want to make sure you have a seamless experience, so here are a few important details:</p>
+    <% } %>
+
     <ol>
+      <% if (email && password) { %>
       <li>
         <strong>Login Credentials:</strong><br>
         Username: <%= email %><br>
         Password: <%= password %>
       </li>
+      <% } %>
       <li>
         <strong>Getting Started:</strong><br>
         To help you get started, we recommend the following steps:
@@ -82,9 +61,12 @@ p {
         </ul>
       </li>
     </ol>
+
     <p>If you have any questions or need assistance, please don't hesitate to reach out to our support team at <a href="mailto:chintamanipala67@gmail.com">chintamanipala67@gmail.com</a>. We're here to help!</p>
+
     <p>Once again, welcome aboard! We hope you enjoy your journey with us.</p>
-    <p>Best regards,<br><b>chintamani pala</b><br>Learning ManageMent System</p>
+
+    <p>Best regards,<br><b>chintamani pala</b><br>Learning Management System</p>
 
     <p>Date: <%= date %></p>
   </div>

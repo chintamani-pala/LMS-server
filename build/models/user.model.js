@@ -57,14 +57,14 @@ userSchema.pre("save", async function (next) {
 });
 //sign access token
 userSchema.methods.SignAccessToken = function () {
-    return jsonwebtoken_1.default.sign({ id: this._id }, process.env.ACCESS_TOKEN || '', {
-        expiresIn: "5m"
+    return jsonwebtoken_1.default.sign({ id: this._id }, process.env.ACCESS_TOKEN || "", {
+        expiresIn: "5m",
     });
 };
 //sign refresh token
 userSchema.methods.SignRefreshToken = function () {
-    return jsonwebtoken_1.default.sign({ id: this._id }, process.env.REFRESH_TOKEN || '', {
-        expiresIn: "3d"
+    return jsonwebtoken_1.default.sign({ id: this._id }, process.env.REFRESH_TOKEN || "", {
+        expiresIn: "3d",
     });
 };
 //compare password

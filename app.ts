@@ -10,8 +10,7 @@ import notificationsRoute from "./routes/notification.route";
 import analyticsRouter from "./routes/analytics.route";
 import layoutRouter from "./routes/layout.route";
 require("dotenv").config();
-import { rateLimit } from 'express-rate-limit'
-
+import { rateLimit } from "express-rate-limit";
 
 //body parser
 app.use(express.json({ limit: "50mb" }));
@@ -20,21 +19,18 @@ app.use(cookieParser());
 //cors=>cross origin resource sharing
 app.use(
   cors({
-    origin: "*", 
+    origin: ["*"],
     credentials: true,
-  }),
-  
+  })
 );
 
 const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
-	standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
-	// store: ... , // Use an external store for consistency across multiple server instances.
-})
-
-
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+  standardHeaders: "draft-7", // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+  // store: ... , // Use an external store for consistency across multiple server instances.
+});
 
 app.use("/api/v1", userRouter);
 app.use("/api/v1", courseRouter);
@@ -66,5 +62,5 @@ app.all("/*", (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Apply the rate limiting middleware to all requests.
-app.use(limiter)
+app.use(limiter);
 app.use(ErrorMiddleware);
