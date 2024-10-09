@@ -1,4 +1,5 @@
 "use strict";
+<<<<<<< HEAD
 /*
 import { Request, Response, NextFunction } from "express";
 import userModel, { IUser } from "../models/user.model";
@@ -416,6 +417,8 @@ export const deleteUser = CatchAsyncError(
 );
 
 */
+=======
+>>>>>>> 3654ed0 (all bug fixed)
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -458,9 +461,12 @@ exports.registerUser = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, 
             activationCode,
         };
         await redis_1.redis.set(user.email, password, "EX", 5 * 60);
+<<<<<<< HEAD
         const html = await ejs_1.default.renderFile(
         // path.join(__dirname, "../mails/activation-mail.ejs"),
         path_1.default.resolve(__dirname, "../mails/activation-mail.ejs"), data);
+=======
+>>>>>>> 3654ed0 (all bug fixed)
         try {
             await (0, sendMail_1.default)({
                 email: user.email,
@@ -523,7 +529,10 @@ exports.activateUser = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, 
             password: TempPassword,
             date: currentDate,
         };
+<<<<<<< HEAD
         const html = await ejs_1.default.renderFile(path_1.default.join(__dirname, "../mails/user-registration-complete.ejs"), userData);
+=======
+>>>>>>> 3654ed0 (all bug fixed)
         try {
             await (0, sendMail_1.default)({
                 email: user.email,
@@ -622,12 +631,28 @@ exports.getUserInfo = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, n
         return next(new ErrorHandler_1.default(error.message, 400));
     }
 });
+<<<<<<< HEAD
+=======
+function generatePassword(length) {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let password = "";
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        password += characters[randomIndex];
+    }
+    return password;
+}
+>>>>>>> 3654ed0 (all bug fixed)
 //social auth
 exports.socialAuth = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, next) => {
     try {
         const { email, name, avatar } = req.body;
         const user = await user_model_1.default.findOne({ email });
         if (!user) {
+<<<<<<< HEAD
+=======
+            const TempPassword = generatePassword(8);
+>>>>>>> 3654ed0 (all bug fixed)
             const date = new Date();
             const currentDate = date.toLocaleString("default", {
                 day: "numeric",
@@ -637,8 +662,13 @@ exports.socialAuth = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, ne
             const newUser = await user_model_1.default.create({ email, name, avatar });
             const userData = {
                 name: newUser.name,
+<<<<<<< HEAD
                 email: undefined,
                 password: undefined,
+=======
+                email: email,
+                password: TempPassword,
+>>>>>>> 3654ed0 (all bug fixed)
                 date: currentDate,
             };
             const html = await ejs_1.default.renderFile(path_1.default.join(__dirname, "../mails/user-registration-complete.ejs"), userData);
@@ -665,6 +695,7 @@ exports.socialAuth = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, ne
 });
 exports.updateUserInfo = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, next) => {
     try {
+<<<<<<< HEAD
         const { name, email } = req.body;
         const userId = req.user?._id || "";
         const user = await user_model_1.default.findById(userId);
@@ -675,6 +706,11 @@ exports.updateUserInfo = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res
             }
             user.email = email;
         }
+=======
+        const { name } = req.body;
+        const userId = req.user?._id || "";
+        const user = await user_model_1.default.findById(userId);
+>>>>>>> 3654ed0 (all bug fixed)
         if (name && user) {
             user.name = name;
         }

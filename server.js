@@ -11,7 +11,11 @@ const cloudinary_1 = require("cloudinary");
 cloudinary_1.v2.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.CLOUD_API_KEY,
+<<<<<<< HEAD
     api_secret: process.env.CLOUD_SECRETE_KEY
+=======
+    api_secret: process.env.CLOUD_SECRETE_KEY,
+>>>>>>> 3654ed0 (all bug fixed)
 });
 //create server
 app_1.app.listen(process.env.PORT, () => {
