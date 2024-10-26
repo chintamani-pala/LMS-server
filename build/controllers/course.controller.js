@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCourse = exports.getAllcourses = exports.addReview = exports.addAnswer = exports.addQuestion = exports.getCourseByUser = exports.getAllCourse = exports.getSingleCourse = exports.editCourse = exports.uploadCourse = void 0;
+exports.generateVideoUrl = exports.deleteCourse = exports.getAllcourses = exports.addReview = exports.addAnswer = exports.addQuestion = exports.getCourseByUser = exports.getAllCourse = exports.getSingleCourse = exports.editCourse = exports.uploadCourse = void 0;
 const catchAsyncErrors_1 = require("../middleware/catchAsyncErrors");
 const ErrorHandler_1 = __importDefault(require("../utils/ErrorHandler"));
 const cloudinary_1 = __importDefault(require("cloudinary"));
@@ -14,6 +14,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 // import ejs from "ejs";
 // import sendMail from "../utils/sendMail";
 const notificationModel_1 = __importDefault(require("../models/notificationModel"));
+const axios_1 = __importDefault(require("axios"));
 //upload course
 exports.uploadCourse = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, next) => {
     try {
@@ -328,5 +329,23 @@ exports.deleteCourse = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, 
     }
     catch (error) {
         return next(new ErrorHandler_1.default(error.message, 500));
+    }
+});
+exports.generateVideoUrl = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, next) => {
+    try {
+        const { videoId } = req.body;
+        const response = await axios_1.default.post(`https://dev.vdocipher.com/api/videos/${videoId}/otp`, {
+            ttl: 300,
+        }, {
+            headers: {
+                Accept: "application/json",
+                "Content-type": "application/json",
+                Authorization: `Apisecret ${process.env.VDOCIPHER_API_SECRET}`,
+            },
+        });
+        res.json(response.data);
+    }
+    catch (error) {
+        return next(new ErrorHandler_1.default(error.message, 400));
     }
 });

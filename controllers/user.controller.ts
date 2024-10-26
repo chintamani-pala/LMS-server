@@ -240,10 +240,7 @@ export const updateAccessToken = CatchAsyncError(
 
       await redis.set(user._id, JSON.stringify(user), "EX", 7 * 24 * 60 * 60); //7 days cache expire
 
-      res.status(200).json({
-        status: "success",
-        accessToken,
-      });
+      next();
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
@@ -268,7 +265,7 @@ interface ISocialAuthBody {
   avatar: string;
 }
 
-function generatePassword(length) {
+function generatePassword(length: number) {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let password = "";
@@ -286,18 +283,23 @@ export const socialAuth = CatchAsyncError(
       const { email, name, avatar } = req.body as ISocialAuthBody;
       const user = await userModel.findOne({ email });
       if (!user) {
-        const TempPassword = generatePassword(8);
+        const password = generatePassword(8);
         const date = new Date();
         const currentDate = date.toLocaleString("default", {
           day: "numeric",
           month: "short",
           year: "numeric",
         });
-        const newUser = await userModel.create({ email, name, avatar });
+        const newUser = await userModel.create({
+          email,
+          name,
+          avatar,
+          password,
+        });
         const userData = {
           name: newUser.name,
           email: email,
-          password: TempPassword,
+          password: password,
           date: currentDate,
         };
         const html = await ejs.renderFile(
@@ -454,6 +456,8 @@ export const updateUserRole = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id, role } = req.body;
+      console.log(req);
+      console.log(id, role);
       updateUserRoleServices(res, id, role);
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
@@ -466,6 +470,7 @@ export const deleteUser = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
+      console.log(id);
       deleteUserServices(id, res, next);
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 500));

@@ -28,7 +28,7 @@ const reviewSchema = new mongoose_1.Schema({
     user: Object,
     rating: {
         type: Number,
-        default: 0
+        default: 0,
     },
     comment: String,
 });
@@ -39,7 +39,7 @@ const linkSchema = new mongoose_1.Schema({
 const commentSchema = new mongoose_1.Schema({
     user: Object,
     question: String,
-    questionReplies: [Object]
+    questionReplies: [Object],
 });
 const courseDataSchema = new mongoose_1.Schema({
     videoUrl: String,
@@ -55,15 +55,15 @@ const courseDataSchema = new mongoose_1.Schema({
 const courseSchema = new mongoose_1.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
     },
     description: {
         type: String,
-        required: true
+        required: true,
     },
     price: {
         type: Number,
-        required: true
+        required: true,
     },
     estimatedPrice: {
         type: Number,
@@ -71,24 +71,24 @@ const courseSchema = new mongoose_1.Schema({
     thumbnail: {
         public_id: {
             type: String,
-            required: false
+            required: false,
         },
         url: {
             type: String,
-            required: false
-        }
+            required: false,
+        },
     },
     tags: {
         type: String,
-        required: true
+        required: true,
     },
     level: {
         type: String,
-        required: true
+        required: true,
     },
-    demoVideoUrl: {
+    demoUrl: {
         type: String,
-        required: true
+        required: true,
     },
     benifits: [{ title: String }],
     prerequisits: [{ title: String }],
@@ -96,11 +96,11 @@ const courseSchema = new mongoose_1.Schema({
     courseData: [courseDataSchema],
     ratings: {
         type: Number,
-        default: 0
+        default: 0,
     },
     purchased: {
         type: Number,
-        default: 0
+        default: 0,
     },
 }, { timestamps: true });
 const CourseModel = mongoose_1.default.model("Course", courseSchema);

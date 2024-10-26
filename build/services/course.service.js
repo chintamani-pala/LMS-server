@@ -11,6 +11,7 @@ const redis_1 = require("../utils/redis");
 //create course
 exports.createCourse = (0, catchAsyncErrors_1.CatchAsyncError)(async (data, res) => {
     const course = await course_model_1.default.create(data);
+    await redis_1.redis.del("allCourses");
     res.status(201).json({
         success: true,
         course,
@@ -33,6 +34,7 @@ const deleteCourseServices = async (id, res, next) => {
     }
     await course_model_1.default.findByIdAndDelete(id);
     await redis_1.redis.del(id);
+    await redis_1.redis.del("allCourses");
     res.status(201).json({
         success: true,
         message: "Course deleted Successfully",

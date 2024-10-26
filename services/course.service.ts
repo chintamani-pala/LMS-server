@@ -8,6 +8,7 @@ import { redis } from "../utils/redis";
 export const createCourse = CatchAsyncError(
   async (data: any, res: Response) => {
     const course = await CourseModel.create(data);
+    await redis.del("allCourses");
     res.status(201).json({
       success: true,
       course,
@@ -25,15 +26,20 @@ export const getAllcoursesService = async (res: Response) => {
 };
 
 //delete course --only for admin
-export const deleteCourseServices = async (id: string, res: Response, next: NextFunction) => {
+export const deleteCourseServices = async (
+  id: string,
+  res: Response,
+  next: NextFunction
+) => {
   const user = await CourseModel.findById(id);
-  if(!user){
+  if (!user) {
     return next(new ErrorHandler("Course not found", 404));
   }
   await CourseModel.findByIdAndDelete(id);
   await redis.del(id);
+  await redis.del("allCourses");
   res.status(201).json({
     success: true,
-    message:"Course deleted Successfully",
+    message: "Course deleted Successfully",
   });
-}
+};
