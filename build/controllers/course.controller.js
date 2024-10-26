@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateVideoUrl = exports.deleteCourse = exports.getAllcourses = exports.addReview = exports.addAnswer = exports.addQuestion = exports.getCourseByUser = exports.getAllCourse = exports.getSingleCourse = exports.editCourse = exports.uploadCourse = void 0;
+exports.generateVideoUrl = exports.deleteCourse = exports.getAdminAllcourses = exports.addReview = exports.addAnswer = exports.addQuestion = exports.getCourseByUser = exports.getAllCourse = exports.getSingleCourse = exports.editCourse = exports.uploadCourse = void 0;
 const catchAsyncErrors_1 = require("../middleware/catchAsyncErrors");
 const ErrorHandler_1 = __importDefault(require("../utils/ErrorHandler"));
 const cloudinary_1 = __importDefault(require("cloudinary"));
@@ -44,15 +44,21 @@ exports.editCourse = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, ne
         const data = req.body;
         const thumbnail = data.thumbnail;
         const courseId = req.params.id;
-        if (thumbnail) {
-            const course = await course_model_1.default.findById(courseId);
-            await cloudinary_1.default.v2.uploader.destroy(course?.thumbnail.public_id);
+        const courseData = (await course_model_1.default.findById(courseId));
+        if (thumbnail && !thumbnail.startsWith("https")) {
+            await cloudinary_1.default.v2.uploader.destroy(courseData?.thumbnail.public_id);
             const myCloud = await cloudinary_1.default.v2.uploader.upload(thumbnail, {
                 folder: "courses",
             });
             data.thumbnail = {
                 public_id: myCloud.public_id,
                 url: myCloud.secure_url,
+            };
+        }
+        if (thumbnail.startsWith("https")) {
+            data.thumbnail = {
+                public_id: courseData?.thumbnail?.public_id,
+                url: courseData?.thumbnail?.secure_url,
             };
         }
         const course = await course_model_1.default.findByIdAndUpdate(courseId, {
@@ -313,7 +319,7 @@ exports.addReview = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, nex
 // );
 //
 //get all courses --only for admin
-exports.getAllcourses = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, next) => {
+exports.getAdminAllcourses = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, next) => {
     try {
         (0, course_service_1.getAllcoursesService)(res);
     }

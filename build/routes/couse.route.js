@@ -17,7 +17,7 @@ courseRouter.put("/add-question", user_controller_1.updateAccessToken, auth_1.is
 courseRouter.put("/add-answer", user_controller_1.updateAccessToken, auth_1.isAutheticated, course_controller_1.addAnswer);
 courseRouter.put("/add-review/:id", user_controller_1.updateAccessToken, auth_1.isAutheticated, course_controller_1.addReview);
 // courseRouter.put("/add-reply", isAutheticated, authorizeRoles("admin"),addReplyToReview);
-courseRouter.get("/get-courses", user_controller_1.updateAccessToken, auth_1.isAutheticated, (0, auth_1.authorizeRoles)("admin"), course_controller_1.getAllcourses);
+courseRouter.get("/get-admin-courses", user_controller_1.updateAccessToken, auth_1.isAutheticated, (0, auth_1.authorizeRoles)("admin"), course_controller_1.getAdminAllcourses);
 courseRouter.delete("/delete-course/:id", user_controller_1.updateAccessToken, auth_1.isAutheticated, (0, auth_1.authorizeRoles)("admin"), course_controller_1.deleteCourse);
 courseRouter.post("/getVdoCipherOTP", course_controller_1.generateVideoUrl);
 exports.default = courseRouter;
