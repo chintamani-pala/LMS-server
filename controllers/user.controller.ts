@@ -173,6 +173,7 @@ export const loginUser = CatchAsyncError(
       if (!isPasswordMatch) {
         return next(new ErrorHandler("Invalid email or password", 400));
       }
+      user.password = undefined;
 
       sendToken(user, 200, res);
     } catch (error: any) {
@@ -382,6 +383,7 @@ export const updatePassword = CatchAsyncError(
 
       await user?.save();
       await redis.set(req.user?._id, JSON.stringify(user));
+      user.password = undefined;
       res.status(201).json({
         success: true,
         user,

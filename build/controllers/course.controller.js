@@ -58,7 +58,7 @@ exports.editCourse = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, ne
         if (thumbnail.startsWith("https")) {
             data.thumbnail = {
                 public_id: courseData?.thumbnail?.public_id,
-                url: courseData?.thumbnail?.secure_url,
+                url: courseData?.thumbnail?.url,
             };
         }
         const course = await course_model_1.default.findByIdAndUpdate(courseId, {

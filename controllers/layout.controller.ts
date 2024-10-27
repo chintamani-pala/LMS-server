@@ -17,16 +17,20 @@ export const createLayout = CatchAsyncError(
       if (type === "Banner") {
         const { image, title, subTitle } = req.body;
         const myCloud = await cloudinary.v2.uploader.upload(image, {
-          folder: "Lauout",
+          folder: "Layout",
         });
         const banner = {
-          image: {
-            public_id: myCloud.public_id,
-            url: myCloud.secure_url,
+          type: "Banner",
+          banner: {
+            image: {
+              public_id: myCloud.public_id,
+              url: myCloud.secure_url,
+            },
+            title,
+            subTitle,
           },
-          title,
-          subTitle,
         };
+
         await LayoutModel.create(banner);
       }
 
@@ -74,17 +78,29 @@ export const editLayout = CatchAsyncError(
       const { type } = req.body;
       if (type === "Banner") {
         const bannerData: any = await LayoutModel.findOne({ type: "Banner" });
-        const { image, title, subTitle } = req.body;
-        if (bannerData) {
-          await cloudinary.v2.uploader.destroy(bannerData.image.public_id);
+        let { image, title, subTitle } = req.body;
+        if (!image) {
+          image = undefined;
         }
-        const myCloud = await cloudinary.v2.uploader.upload(image, {
-          folder: "Lauout",
-        });
+        const data =
+          image &&
+          (image.startsWith("https")
+            ? bannerData
+            : await cloudinary.v2.uploader.upload(image, {
+                folder: "Layout",
+              }));
+
         const banner = {
+          type: "Banner",
           image: {
-            public_id: myCloud.public_id,
-            url: myCloud.secure_url,
+            public_id:
+              image && image.startsWith("http")
+                ? bannerData?.banner?.image?.public_id
+                : data?.public_id,
+            url:
+              image && image.startsWith("http")
+                ? bannerData?.banner?.image?.url
+                : data?.url,
           },
           title,
           subTitle,
